@@ -4,7 +4,6 @@ package Manager;
 import Debt.Debt;
 import Loan.Loan;
 import Method.*;
-import Outcome.Outcome;
 
 import java.io.IOException;
 

@@ -5,7 +5,7 @@ import Manager.MoneyManager;
 import java.util.Scanner;
 
 public class Client {
-    private MoneyManager moneyManager;
+    private final MoneyManager moneyManager;
 
     public Client() {
         moneyManager = MoneyManager.getMoneyManager();
@@ -28,8 +28,9 @@ public class Client {
         System.out.println("<____ Income Menu ____>");
         System.out.println("1. New income");
         System.out.println("2. Edit income");
-        System.out.println("3. Display all of incomes");
-        System.out.println("4. Get total of incomes");
+        System.out.println("3. Remove income");
+        System.out.println("4. Display all of incomes");
+        System.out.println("5. Get total of incomes");
         System.out.println("0. Return to previous menu");
     }
     private void editIncomeMenu(){
@@ -44,8 +45,9 @@ public class Client {
         System.out.println("<____ Outcome Menu ____>");
         System.out.println("1. New outcome");
         System.out.println("2. Edit outcome");
-        System.out.println("3. Display all of outcomes");
-        System.out.println("4. Get total of outcomes");
+        System.out.println("3. Remove outcome");
+        System.out.println("4. Display all of outcomes");
+        System.out.println("5. Get total of outcomes");
         System.out.println("0. Return to previous menu");
     }
     private void editOutcomeMenu(){
@@ -60,9 +62,10 @@ public class Client {
         System.out.println("<____ Loan menu ____>");
         System.out.println("1. New loan");
         System.out.println("2. Edit loan");
-        System.out.println("3. Receive loan");
-        System.out.println("4. Display all of loans");
-        System.out.println("5. Get total of loans");
+        System.out.println("3. Remove loan");
+        System.out.println("4. Receive loan");
+        System.out.println("5. Display all of loans");
+        System.out.println("6. Get total of loans");
         System.out.println("0. Return to previous menu");
     }
     private void editLoanMenu(){
@@ -78,9 +81,10 @@ public class Client {
         System.out.println("<____ Debt menu ____>");
         System.out.println("1. New debt");
         System.out.println("2. Edit debt");
-        System.out.println("3. Repay debt");
-        System.out.println("4. Display all of debts");
-        System.out.println("5. Get total of debts");
+        System.out.println("3. Remove debt");
+        System.out.println("4. Repay debt");
+        System.out.println("5. Display all of debts");
+        System.out.println("6. Get total of debts");
         System.out.println("0. Return to previous menu");
     }
     private void editDebtMenu(){
@@ -145,21 +149,32 @@ public class Client {
                 int code = scanner.nextInt();
                 if( moneyManager.getIncomeManager().checkCode(code))
                     editIncomeMenuRun(code);
+                else
+                    System.out.println("This code is wrong");
                 incomeMenuRun();
                 break;
             case 3:
-                moneyManager.getIncomeManager().display();
+                System.out.println("Enter code");
+                int code1 = scanner.nextInt();
+                if(moneyManager.getIncomeManager().checkCode(code1))
+                    moneyManager.remove(moneyManager.getIncomeManager(),code1);
+                else
+                    System.out.println("This code is wrong");
                 incomeMenuRun();
                 break;
             case 4:
-                moneyManager.getIncomeManager().getTotal();
+                moneyManager.getIncomeManager().display();
+                incomeMenuRun();
+                break;
+            case 5:
+                moneyManager.getTotal(moneyManager.getIncomeManager());
                 incomeMenuRun();
                 break;
             case 0:
                 moneyManagerMenuRun();
                 break;
             default:
-                System.out.println("please choose from 0 to 4 ");
+                System.out.println("please choose from 0 to 5");
                 incomeMenuRun();
 
         }
@@ -234,13 +249,24 @@ public class Client {
                 int code = scanner.nextInt();
                 if( moneyManager.getOutcomeManager().checkCode(code))
                     editOutcomeMenuRun(code);
+                else
+                    System.out.println("This code is wrong");
                 outcomeMenuRun();
                 break;
             case 3:
-                moneyManager.getOutcomeManager().display();
+                System.out.println("Enter code");
+                int code1 = scanner.nextInt();
+                if( moneyManager.getOutcomeManager().checkCode(code1))
+                    moneyManager.remove(moneyManager.getOutcomeManager(),code1);
+                else
+                    System.out.println("This code is wrong");
                 outcomeMenuRun();
                 break;
             case 4:
+                moneyManager.getOutcomeManager().display();
+                outcomeMenuRun();
+                break;
+            case 5:
                 moneyManager.getOutcomeManager().getTotal();
                 outcomeMenuRun();
                 break;
@@ -248,7 +274,7 @@ public class Client {
                 moneyManagerMenuRun();
                 break;
             default:
-                System.out.println("please choose from 0 to 4 ");
+                System.out.println("please choose from 0 to 5 ");
                 outcomeMenuRun();
 
         }
@@ -317,7 +343,7 @@ public class Client {
                 scanner.nextLine();
                 System.out.println("Enter new note :");
                 String note = scanner.nextLine();
-                moneyManager.getDebtManager().newDebt(date,name,money,date);
+                moneyManager.getDebtManager().newDebt(date,name,money,note);
                 debtMenuRun();
                 break;
             case 2:
@@ -327,9 +353,20 @@ public class Client {
                 if (moneyManager.getDebtManager().checkCode(code))
                     editDebtMenuRun(code);
                 else
-                    debtMenuRun();
+                    System.out.println("This code is wrong");
+                debtMenuRun();
                 break;
             case 3:
+                System.out.println("Enter code ");
+                int code1 = scanner.nextInt();
+                scanner.nextLine();
+                if (moneyManager.getDebtManager().checkCode(code1))
+                    moneyManager.remove(moneyManager.getDebtManager(),code1);
+                else
+                    System.out.println("This code is wrong");
+                debtMenuRun();
+                break;
+            case 4:
                 System.out.println("Enter date");
                 String date3 = scanner.nextLine();
                 System.out.println("Enter name");
@@ -340,11 +377,11 @@ public class Client {
                 moneyManager.repayDebt(date3,name3,money3);
                 debtMenuRun();
                 break;
-            case 4:
+            case 5:
                 moneyManager.getDebtManager().display();
                 debtMenuRun();
                 break;
-            case 5:
+            case 6:
                 moneyManager.getDebtManager().getTotal();
                 debtMenuRun();
                 break;
@@ -352,7 +389,7 @@ public class Client {
                 moneyManagerMenuRun();
                 break;
             default:
-                System.out.println("Please choose from 0 to 5");
+                System.out.println("Please choose from 0 to 6");
                 debtMenuRun();
         }
     }
@@ -428,9 +465,9 @@ public class Client {
                 System.out.println("Enter money :");
                 double money = scanner.nextDouble();
                 scanner.nextLine();
-                System.out.println("Enter new note :");
+                System.out.println("Enter note :");
                 String note = scanner.nextLine();
-                moneyManager.getLoanManager().newLoan(date,name,money,date);
+                moneyManager.getLoanManager().newLoan(date,name,money,note);
                 loanMenuRun();
                 break;
             case 2:
@@ -440,9 +477,20 @@ public class Client {
                 if (moneyManager.getLoanManager().checkCode(code))
                     editLoanMenuRun(code);
                 else
-                    loanMenuRun();
+                    System.out.println("This code is wrong");
+                loanMenuRun();
                 break;
             case 3:
+                System.out.println("Enter code ");
+                int code1 = scanner.nextInt();
+                scanner.nextLine();
+                if (moneyManager.getLoanManager().checkCode(code1))
+                    moneyManager.remove(moneyManager.getLoanManager(),code1);
+                else
+                    System.out.println("This code is wrong");
+                loanMenuRun();
+                break;
+            case 4:
                 System.out.println("Enter date");
                 String date3 = scanner.nextLine();
                 System.out.println("Enter name");
@@ -453,11 +501,11 @@ public class Client {
                 moneyManager.receiveLoan(date3,name3,money3);
                 loanMenuRun();
                 break;
-            case 4:
+            case 5:
                 moneyManager.getLoanManager().display();
                 loanMenuRun();
                 break;
-            case 5:
+            case 6:
                 moneyManager.getLoanManager().getTotal();
                 loanMenuRun();
                 break;
@@ -465,7 +513,7 @@ public class Client {
                 moneyManagerMenuRun();
                 break;
             default:
-                System.out.println("Please choose from 0 to 5");
+                System.out.println("Please choose from 0 to 6");
                 loanMenuRun();
         }
     }
