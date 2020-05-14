@@ -31,7 +31,12 @@ public class DebtManager extends Manager implements EditName {
         }
         return  total;
     }
-    public void editDate(int code,String date){
+
+    public List<Debt> getDebts() {
+        return debts;
+    }
+
+    public void editDate(int code, String date){
         for (Debt debt : debts){
             if(debt.getCode() == code)
                 debt.setDate(date);
@@ -65,6 +70,13 @@ public class DebtManager extends Manager implements EditName {
                 debts.remove(debt);
             return;
         }
+    }
+    public boolean checkCode(int code){
+        for (Debt debt:debts){
+            if( debt.getCode() == code)
+                return  true;
+        }
+        return false;
     }
     public void writer() throws IOException {
         String path = "E:\\Codegym\\Module 2\\Week9\\MoneyManager\\Debt.txt";

@@ -58,6 +58,13 @@ public class IncomeManager extends Manager {
             return;
         }
     }
+    public boolean checkCode(int code){
+        for (Income income: incomes){
+            if(income.getCode() == code)
+                return true;
+        }
+        return false;
+    }
     public void writer() throws IOException {
         String path = "E:\\Codegym\\Module 2\\Week9\\MoneyManager\\Incomes.txt";
         FileOutputStream file = new FileOutputStream(path);

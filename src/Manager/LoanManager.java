@@ -31,7 +31,12 @@ public class LoanManager extends Manager implements  EditName {
         }
         return  total;
     }
-    public void editDate(int code,String date){
+
+    public List<Loan> getLoans() {
+        return loans;
+    }
+
+    public void editDate(int code, String date){
         for (Loan loan : loans){
             if(loan.getCode() == code)
                 loan.setDate(date);
@@ -65,6 +70,13 @@ public class LoanManager extends Manager implements  EditName {
                 loans.remove(loan);
             return;
         }
+    }
+    public boolean checkCode(int code){
+        for(Loan loan : loans){
+            if(loan.getCode() == code)
+                return  true;
+        }
+        return false;
     }
     public void writer() throws IOException {
         String path = "E:\\Codegym\\Module 2\\Week9\\MoneyManager\\Loan.txt";

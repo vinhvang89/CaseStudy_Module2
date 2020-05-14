@@ -58,6 +58,13 @@ public class OutcomeManager extends Manager {
             return;
         }
     }
+    public boolean checkCode(int code){
+        for (Outcome outcome:outcomes){
+            if(outcome.getCode() == code)
+                return true;
+        }
+        return false;
+    }
     public void writer() throws IOException {
         String path = "E:\\Codegym\\Module 2\\Week9\\MoneyManager\\Outcomes.txt";
         FileOutputStream fileOutputStream = new FileOutputStream(path);
