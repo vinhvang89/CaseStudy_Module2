@@ -1,7 +1,6 @@
 package Manager;
 
 import Income.Income;
-import Method.*;
 
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
@@ -10,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IncomeManager implements GetTotal,ReaderData, WriterData , EditDate, EditMoney,EditNote,Remove {
+public class IncomeManager extends Manager {
     private static IncomeManager incomeManager;
     private final List<Income> incomes;
     private IncomeManager(){
@@ -79,10 +78,14 @@ public class IncomeManager implements GetTotal,ReaderData, WriterData , EditDate
             String date = content[0].substring(6);
             Double money = Double.parseDouble(content[1].substring(9));
             String note = content[0].substring(7);
-            int code = Integer.parseInt(content[4].substring(6));
             newIncomes(date,money,note);
         }
         br.close();
+    }
+    public void display(){
+        for (Income income : incomes){
+            System.out.println(income.toString());
+        }
     }
 
 }

@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DebtManager implements GetTotal, ReaderData, WriterData, EditNote, EditMoney,EditName,EditDate,Remove {
+public class DebtManager extends Manager implements EditName {
     private static DebtManager debtManager;
     private final List<Debt> debts;
     private DebtManager(){
@@ -90,5 +90,10 @@ public class DebtManager implements GetTotal, ReaderData, WriterData, EditNote, 
             newDebt(date,name,money,note);
         }
         br.close();
+    }
+    public void display(){
+        for (Debt debt:debts){
+            System.out.println(debt.toString());
+        }
     }
 }

@@ -1,6 +1,5 @@
 package Manager;
 
-import Income.Income;
 import Loan.Loan;
 import Method.*;
 
@@ -11,7 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoanManager implements GetTotal,ReaderData,WriterData, EditName, EditDate,EditNote,EditMoney,Remove {
+public class LoanManager extends Manager implements  EditName {
     private static LoanManager loanManager;
     private final List<Loan> loans;
     private LoanManager(){
@@ -91,5 +90,10 @@ public class LoanManager implements GetTotal,ReaderData,WriterData, EditName, Ed
             newLoan(date,name,money,note);
         }
         br.close();
+    }
+    public void display(){
+        for (Loan loan : loans){
+            System.out.println(loan.toString());
+        }
     }
 }

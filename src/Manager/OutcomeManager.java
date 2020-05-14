@@ -1,6 +1,5 @@
 package Manager;
 
-import Method.*;
 import Outcome.Outcome;
 
 import java.io.BufferedReader;
@@ -10,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OutcomeManager implements GetTotal, ReaderData, WriterData, EditMoney, EditNote,EditDate,Remove {
+public class OutcomeManager extends Manager {
     private static OutcomeManager outcomeManager;
     private final List<Outcome> outcomes;
     private OutcomeManager(){
@@ -82,5 +81,10 @@ public class OutcomeManager implements GetTotal, ReaderData, WriterData, EditMon
             newOutcomes(date,money,note);
         }
         br.close();
+    }
+    public void display(){
+        for (Outcome outcome : outcomes){
+            System.out.println(outcome.toString());
+        }
     }
 }
