@@ -1,6 +1,7 @@
 package Manager;
 
 import Income.Income;
+import Method.*;
 
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
@@ -9,7 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IncomeManager {
+public class IncomeManager implements GetTotal,ReaderData, WriterData , EditDate, EditMoney,EditNote,Remove {
     private static IncomeManager incomeManager;
     private final List<Income> incomes;
     private IncomeManager(){
@@ -37,8 +38,28 @@ public class IncomeManager {
             return;
         }
     }
-    public void editName(int code,String name){}
-    public void writerIncomes() throws IOException {
+    public void editMoney(int code,double money){
+        for (Income income : incomes){
+            if(income.getCode() == code)
+                income.setMoney(money);
+            return;
+        }
+    }
+    public void editNote(int code,String note){
+        for (Income income : incomes){
+            if(income.getCode() == code)
+                income.setNote(note);
+            return;
+        }
+    }
+    public void remove(int code){
+        for (Income income : incomes){
+            if(income.getCode() == code)
+                incomes.remove(income);
+            return;
+        }
+    }
+    public void writer() throws IOException {
         String path = "E:\\Codegym\\Module 2\\Week9\\MoneyManager\\Incomes.txt";
         FileOutputStream file = new FileOutputStream(path);
         for (Income income : incomes){
@@ -49,7 +70,7 @@ public class IncomeManager {
         }
         file.close();
     }
-    public void readerIncome() throws IOException {
+    public void reader() throws IOException {
         String path = "E:\\Codegym\\Module 2\\Week9\\MoneyManager\\Incomes.txt";
         BufferedReader br = new BufferedReader(new FileReader(path));
         String line;

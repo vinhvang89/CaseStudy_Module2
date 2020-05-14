@@ -1,6 +1,7 @@
 package Manager;
 
 import Debt.Debt;
+import Method.*;
 
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
@@ -9,7 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DebtManager {
+public class DebtManager implements GetTotal, ReaderData, WriterData, EditNote, EditMoney,EditName,EditDate,Remove {
     private static DebtManager debtManager;
     private final List<Debt> debts;
     private DebtManager(){
@@ -30,7 +31,42 @@ public class DebtManager {
         }
         return  total;
     }
-    public void writerIncomes() throws IOException {
+    public void editDate(int code,String date){
+        for (Debt debt : debts){
+            if(debt.getCode() == code)
+                debt.setDate(date);
+            return;
+        }
+    }
+    public void editMoney(int code,double money){
+        for (Debt debt : debts){
+            if(debt.getCode() == code)
+                debt.setMoney(money);
+            return;
+        }
+    }
+    public void editNote(int code,String note){
+        for (Debt debt : debts){
+            if(debt.getCode() == code)
+                debt.setNote(note);
+            return;
+        }
+    }
+    public void editName(int code,String name){
+        for (Debt debt : debts){
+            if(debt.getCode() == code)
+                debt.setName(name);
+            return;
+        }
+    }
+    public void remove(int code){
+        for (Debt debt : debts){
+            if(debt.getCode() == code)
+                debts.remove(debt);
+            return;
+        }
+    }
+    public void writer() throws IOException {
         String path = "E:\\Codegym\\Module 2\\Week9\\MoneyManager\\Debt.txt";
         FileOutputStream file = new FileOutputStream(path);
         for (Debt debt : debts){
@@ -41,7 +77,7 @@ public class DebtManager {
         }
         file.close();
     }
-    public void readerIncome() throws IOException {
+    public void reader() throws IOException {
         String path = "E:\\Codegym\\Module 2\\Week9\\MoneyManager\\Debt.txt";
         BufferedReader br = new BufferedReader(new FileReader(path));
         String line;

@@ -1,6 +1,8 @@
 package Manager;
 
+import Income.Income;
 import Loan.Loan;
+import Method.*;
 
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
@@ -9,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoanManager {
+public class LoanManager implements GetTotal,ReaderData,WriterData, EditName, EditDate,EditNote,EditMoney,Remove {
     private static LoanManager loanManager;
     private final List<Loan> loans;
     private LoanManager(){
@@ -30,7 +32,42 @@ public class LoanManager {
         }
         return  total;
     }
-    public void writerIncomes() throws IOException {
+    public void editDate(int code,String date){
+        for (Loan loan : loans){
+            if(loan.getCode() == code)
+                loan.setDate(date);
+            return;
+        }
+    }
+    public void editMoney(int code,double money){
+        for (Loan loan : loans){
+            if(loan.getCode() == code)
+                loan.setMoney(money);
+            return;
+        }
+    }
+    public void editNote(int code,String note){
+        for (Loan loan : loans){
+            if(loan.getCode() == code)
+                loan.setNote(note);
+            return;
+        }
+    }
+    public void editName(int code,String name){
+        for (Loan loan : loans){
+            if(loan.getCode() == code)
+                loan.setName(name);
+            return;
+        }
+    }
+    public void remove(int code){
+        for (Loan loan : loans){
+            if(loan.getCode() == code)
+                loans.remove(loan);
+            return;
+        }
+    }
+    public void writer() throws IOException {
         String path = "E:\\Codegym\\Module 2\\Week9\\MoneyManager\\Loan.txt";
         FileOutputStream file = new FileOutputStream(path);
         for (Loan loan : loans){
@@ -41,7 +78,7 @@ public class LoanManager {
         }
         file.close();
     }
-    public void readerIncome() throws IOException {
+    public void reader() throws IOException {
         String path = "E:\\Codegym\\Module 2\\Week9\\MoneyManager\\Loan.txt";
         BufferedReader br = new BufferedReader(new FileReader(path));
         String line;

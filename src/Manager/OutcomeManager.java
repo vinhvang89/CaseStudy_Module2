@@ -1,6 +1,6 @@
 package Manager;
 
-import Income.Income;
+import Method.*;
 import Outcome.Outcome;
 
 import java.io.BufferedReader;
@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OutcomeManager {
+public class OutcomeManager implements GetTotal, ReaderData, WriterData, EditMoney, EditNote,EditDate,Remove {
     private static OutcomeManager outcomeManager;
     private final List<Outcome> outcomes;
     private OutcomeManager(){
@@ -31,7 +31,35 @@ public class OutcomeManager {
         }
         return  total;
     }
-    public void writerOutCome() throws IOException {
+    public void editDate(int code,String date){
+        for (Outcome outcome: outcomes){
+            if(outcome.getCode() == code)
+                outcome.setDate(date);
+            return;
+        }
+    }
+    public void editMoney(int code,double money){
+        for (Outcome outcome : outcomes){
+            if(outcome.getCode() == code)
+                outcome.setMoney(money);
+            return;
+        }
+    }
+    public void editNote(int code,String note){
+        for (Outcome outcome : outcomes){
+            if(outcome.getCode() == code)
+                outcome.setNote(note);
+            return;
+        }
+    }
+    public void remove(int code){
+        for (Outcome outcome : outcomes){
+            if(outcome.getCode() == code)
+                outcomes.remove(outcome);
+            return;
+        }
+    }
+    public void writer() throws IOException {
         String path = "E:\\Codegym\\Module 2\\Week9\\MoneyManager\\Outcomes.txt";
         FileOutputStream fileOutputStream = new FileOutputStream(path);
         for (Outcome outcome : outcomes){
@@ -42,7 +70,7 @@ public class OutcomeManager {
         }
         fileOutputStream.close();
     }
-    public void readerOutcome() throws IOException {
+    public void reader() throws IOException {
         String path = "E:\\Codegym\\Module 2\\Week9\\MoneyManager\\Outcomes.txt";
         BufferedReader br = new BufferedReader(new FileReader(path));
         String line;

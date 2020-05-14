@@ -1,7 +1,11 @@
 package Manager;
 
 
-import Income.Income;
+import Method.GetTotal;
+import Method.ReaderData;
+import Method.WriterData;
+
+import java.io.IOException;
 
 public class MoneyManager {
     private static MoneyManager moneyManager;
@@ -15,9 +19,14 @@ public class MoneyManager {
         loanManager = LoanManager.getLoanManager();
         debtManager = DebtManager.getDebtManager();
     }
-    public double getBalance(){
-        return  incomeManager.getTotal() - outcomeManager.getTotal();
+    public double getTotal(GetTotal getTotal){
+        return getTotal.getTotal();
     }
-
+    public void readerData(ReaderData readerData) throws IOException {
+        readerData.reader();
+    }
+    public void writerData(WriterData writerData) throws IOException {
+        writerData.writer();
+    }
 
 }
