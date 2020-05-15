@@ -2,6 +2,7 @@ package Client;
 
 import Manager.*;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Client {
@@ -12,7 +13,7 @@ public class Client {
     private final DebtManager debtManager;
     private final SecretaryMenuDesigner secretaryMenuDesigner;
 
-    public Client() {
+    public Client() throws IOException {
         moneyManager = MoneyManager.getMoneyManager();
         incomeManager = moneyManager.getIncomeManager();
         outcomeManager = moneyManager.getOutcomeManager();
@@ -20,7 +21,7 @@ public class Client {
         loanManager = moneyManager.getLoanManager();
         secretaryMenuDesigner = SecretaryMenuDesigner.getSecretaryMenuDesigner();
     }
-    protected void moneyManagerMenuRun(){
+    protected void moneyManagerMenuRun() throws IOException {
         secretaryMenuDesigner.moneyManagerMenu();
         Scanner scanner = new Scanner(System.in);
         int choose = scanner.nextInt();
@@ -50,7 +51,7 @@ public class Client {
                 moneyManagerMenuRun();
         }
     }
-    protected void incomeMenuRun(){
+    protected void incomeMenuRun() throws IOException {
         secretaryMenuDesigner.incomeMenu();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your choose :");
@@ -96,6 +97,7 @@ public class Client {
                 break;
             case 0:
                 moneyManagerMenuRun();
+                moneyManager.writerData(incomeManager);
                 break;
             default:
                 System.out.println("please choose from 0 to 5");
@@ -103,7 +105,7 @@ public class Client {
 
         }
     }
-    protected void editIncomeMenuRun(int code){
+    protected void editIncomeMenuRun(int code) throws IOException {
         secretaryMenuDesigner.editIncomeMenu();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your choose");
@@ -150,7 +152,7 @@ public class Client {
                 editIncomeMenuRun(code);
         }
     }
-    private void outcomeMenuRun(){
+    private void outcomeMenuRun() throws IOException {
         secretaryMenuDesigner.outcomeMenu();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your choose :");
@@ -195,6 +197,7 @@ public class Client {
                 outcomeMenuRun();
                 break;
             case 0:
+                moneyManager.writerData(outcomeManager);
                 moneyManagerMenuRun();
                 break;
             default:
@@ -203,7 +206,7 @@ public class Client {
 
         }
     }
-    public void editOutcomeMenuRun(int code){
+    public void editOutcomeMenuRun(int code) throws IOException {
         secretaryMenuDesigner.editOutcomeMenu();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your choose");
@@ -250,7 +253,7 @@ public class Client {
                 editOutcomeMenuRun(code);
         }
     }
-    private void debtMenuRun(){
+    private void debtMenuRun() throws IOException {
         secretaryMenuDesigner.debtMenu();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your choose: ");
@@ -310,6 +313,7 @@ public class Client {
                 debtMenuRun();
                 break;
             case 0:
+                moneyManager.writerData(debtManager);
                 moneyManagerMenuRun();
                 break;
             default:
@@ -317,7 +321,7 @@ public class Client {
                 debtMenuRun();
         }
     }
-    private void editDebtMenuRun(int code){
+    private void editDebtMenuRun(int code) throws IOException {
         secretaryMenuDesigner.editDebtMenu();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your choose :");
@@ -374,7 +378,7 @@ public class Client {
         }
     }
 
-    private void loanMenuRun(){
+    private void loanMenuRun() throws IOException {
         secretaryMenuDesigner.loanMenu();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your choose: ");
@@ -434,6 +438,7 @@ public class Client {
                 loanMenuRun();
                 break;
             case 0:
+                moneyManager.writerData(loanManager);
                 moneyManagerMenuRun();
                 break;
             default:
@@ -441,7 +446,7 @@ public class Client {
                 loanMenuRun();
         }
     }
-    private void editLoanMenuRun(int code){
+    private void editLoanMenuRun(int code) throws IOException {
         secretaryMenuDesigner.editLoanMenu();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your choose :");
@@ -497,7 +502,7 @@ public class Client {
                 editLoanMenuRun(code);
         }
     }
-    public void mainMenuRun(){
+    public void mainMenuRun() throws IOException {
         secretaryMenuDesigner.mainMenu();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your choose ");
@@ -511,7 +516,7 @@ public class Client {
                 System.out.println("Goodbye ^_^");
         }
     }
-    public void start(){
+    public void start() throws IOException {
         mainMenuRun();
     }
 }

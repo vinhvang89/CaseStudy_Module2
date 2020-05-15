@@ -71,8 +71,8 @@ public class MoneyManager {
                     loanManager.remove(loan.getCode());
         }
     }
-    public double getTotal(GetTotal getTotal){
-        return getTotal.getTotal();
+    public void getTotal(GetTotal getTotal){
+        System.out.println(getTotal.getTotal());
     }
     public void editName(EditName editName,int code,String name){
         editName.editName(code,name);
