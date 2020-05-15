@@ -1,103 +1,27 @@
 package Client;
 
-import Manager.MoneyManager;
+import Manager.*;
 
 import java.util.Scanner;
 
 public class Client {
     private final MoneyManager moneyManager;
+    private final IncomeManager incomeManager;
+    private final OutcomeManager outcomeManager;
+    private final LoanManager loanManager;
+    private final DebtManager debtManager;
+    private final SecretaryMenuDesigner secretaryMenuDesigner;
 
     public Client() {
         moneyManager = MoneyManager.getMoneyManager();
+        incomeManager = moneyManager.getIncomeManager();
+        outcomeManager = moneyManager.getOutcomeManager();
+        debtManager = moneyManager.getDebtManager();
+        loanManager = moneyManager.getLoanManager();
+        secretaryMenuDesigner = SecretaryMenuDesigner.getSecretaryMenuDesigner();
     }
-    private void mainMenu(){
-        System.out.println("<===== Main menu =====>");
-        System.out.println("1. Money Manager");
-        System.out.println("0. Exit");
-    }
-    private void moneyManagerMenu(){
-        System.out.println("<+++ Money Manager Menu +++>");
-        System.out.println("1. Income");
-        System.out.println("2. Outcome");
-        System.out.println("3. Get balance");
-        System.out.println("4. Loan");
-        System.out.println("5. Debt");
-        System.out.println("0. Return to main menu");
-    }
-    private void incomeMenu(){
-        System.out.println("<____ Income Menu ____>");
-        System.out.println("1. New income");
-        System.out.println("2. Edit income");
-        System.out.println("3. Remove income");
-        System.out.println("4. Display all of incomes");
-        System.out.println("5. Get total of incomes");
-        System.out.println("0. Return to previous menu");
-    }
-    private void editIncomeMenu(){
-        System.out.println("<....Edit income menu....>");
-        System.out.println("1. Edit date");
-        System.out.println("2. Edit money");
-        System.out.println("3. Edit note");
-        System.out.println("4. Edit all information");
-        System.out.println("0. Return to previous menu");
-    }
-    private void outcomeMenu(){
-        System.out.println("<____ Outcome Menu ____>");
-        System.out.println("1. New outcome");
-        System.out.println("2. Edit outcome");
-        System.out.println("3. Remove outcome");
-        System.out.println("4. Display all of outcomes");
-        System.out.println("5. Get total of outcomes");
-        System.out.println("0. Return to previous menu");
-    }
-    private void editOutcomeMenu(){
-        System.out.println("<....Edit outcome menu....>");
-        System.out.println("1. Edit date");
-        System.out.println("2. Edit money");
-        System.out.println("3. Edit note");
-        System.out.println("4. Edit all information");
-        System.out.println("0. Return to previous menu");
-    }
-    private void loanMenu(){
-        System.out.println("<____ Loan menu ____>");
-        System.out.println("1. New loan");
-        System.out.println("2. Edit loan");
-        System.out.println("3. Remove loan");
-        System.out.println("4. Receive loan");
-        System.out.println("5. Display all of loans");
-        System.out.println("6. Get total of loans");
-        System.out.println("0. Return to previous menu");
-    }
-    private void editLoanMenu(){
-        System.out.println("<....Edit loan menu....>");
-        System.out.println("1. Edit date");
-        System.out.println("2. Edit name");
-        System.out.println("3. Edit money");
-        System.out.println("4. Edit note");
-        System.out.println("5. Edit all information");
-        System.out.println("0. Return to previous menu");
-    }
-    private void debtMenu(){
-        System.out.println("<____ Debt menu ____>");
-        System.out.println("1. New debt");
-        System.out.println("2. Edit debt");
-        System.out.println("3. Remove debt");
-        System.out.println("4. Repay debt");
-        System.out.println("5. Display all of debts");
-        System.out.println("6. Get total of debts");
-        System.out.println("0. Return to previous menu");
-    }
-    private void editDebtMenu(){
-        System.out.println("<....Edit debt menu....>");
-        System.out.println("1. Edit date");
-        System.out.println("2. Edit name");
-        System.out.println("3. Edit money");
-        System.out.println("4. Edit note");
-        System.out.println("5. Edit all information");
-        System.out.println("0. Return to previous menu");
-    }
-    private void moneyManagerMenuRun(){
-        moneyManagerMenu();
+    protected void moneyManagerMenuRun(){
+        secretaryMenuDesigner.moneyManagerMenu();
         Scanner scanner = new Scanner(System.in);
         int choose = scanner.nextInt();
         scanner.nextLine();
@@ -126,8 +50,8 @@ public class Client {
                 moneyManagerMenuRun();
         }
     }
-    private void incomeMenuRun(){
-        incomeMenu();
+    protected void incomeMenuRun(){
+        secretaryMenuDesigner.incomeMenu();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your choose :");
         int choose = scanner.nextInt();
@@ -141,13 +65,13 @@ public class Client {
                 scanner.nextLine();
                 System.out.println("Enter new Note");
                 String note = scanner.nextLine();
-                moneyManager.getIncomeManager().newIncomes(date,money,note);
+                incomeManager.newIncomes(date,money,note);
                 incomeMenuRun();
                 break;
             case 2:
                 System.out.println("Enter code");
                 int code = scanner.nextInt();
-                if( moneyManager.getIncomeManager().checkCode(code))
+                if( incomeManager.checkCode(code))
                     editIncomeMenuRun(code);
                 else
                     System.out.println("This code is wrong");
@@ -156,18 +80,18 @@ public class Client {
             case 3:
                 System.out.println("Enter code");
                 int code1 = scanner.nextInt();
-                if(moneyManager.getIncomeManager().checkCode(code1))
-                    moneyManager.remove(moneyManager.getIncomeManager(),code1);
+                if(incomeManager.checkCode(code1))
+                    moneyManager.remove(incomeManager,code1);
                 else
                     System.out.println("This code is wrong");
                 incomeMenuRun();
                 break;
             case 4:
-                moneyManager.getIncomeManager().display();
+                incomeManager.display();
                 incomeMenuRun();
                 break;
             case 5:
-                moneyManager.getTotal(moneyManager.getIncomeManager());
+                moneyManager.getTotal(incomeManager);
                 incomeMenuRun();
                 break;
             case 0:
@@ -179,8 +103,8 @@ public class Client {
 
         }
     }
-    public void editIncomeMenuRun(int code){
-        editIncomeMenu();
+    protected void editIncomeMenuRun(int code){
+        secretaryMenuDesigner.editIncomeMenu();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your choose");
         int choose = scanner.nextInt();
@@ -189,20 +113,20 @@ public class Client {
             case 1:
                 System.out.println("Enter new date");
                 String date = scanner.nextLine();
-                moneyManager.getIncomeManager().editDate(code,date);
+                incomeManager.editDate(code,date);
                 editIncomeMenuRun(code);
                 break;
             case 2:
                 System.out.println("Enter new money");
                 double money = scanner.nextDouble();
                 scanner.nextLine();
-                moneyManager.getIncomeManager().editMoney(code,money);
+                incomeManager.editMoney(code,money);
                 editIncomeMenuRun(code);
                 break;
             case 3:
                 System.out.println("Enter new note");
                 String note = scanner.nextLine();
-                moneyManager.getIncomeManager().editNote(code,note);
+                incomeManager.editNote(code,note);
                 editIncomeMenuRun(code);
                 break;
             case 4:
@@ -213,9 +137,9 @@ public class Client {
                 scanner.nextLine();
                 System.out.println("Enter new note");
                 String note1 = scanner.nextLine();
-                moneyManager.getIncomeManager().editDate(code,date1);
-                moneyManager.getIncomeManager().editMoney(code,money1);
-                moneyManager.getIncomeManager().editNote(code,note1);
+                incomeManager.editDate(code,date1);
+                incomeManager.editMoney(code,money1);
+                incomeManager.editNote(code,note1);
                 editIncomeMenuRun(code);
                 break;
             case 0:
@@ -227,7 +151,7 @@ public class Client {
         }
     }
     private void outcomeMenuRun(){
-        outcomeMenu();
+        secretaryMenuDesigner.outcomeMenu();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your choose :");
         int choose = scanner.nextInt();
@@ -241,13 +165,13 @@ public class Client {
                 scanner.nextLine();
                 System.out.println("Enter new Note");
                 String note = scanner.nextLine();
-                moneyManager.getOutcomeManager().newOutcomes(date,money,note);
+                outcomeManager.newOutcomes(date,money,note);
                 outcomeMenuRun();
                 break;
             case 2:
                 System.out.println("Enter code");
                 int code = scanner.nextInt();
-                if( moneyManager.getOutcomeManager().checkCode(code))
+                if( outcomeManager.checkCode(code))
                     editOutcomeMenuRun(code);
                 else
                     System.out.println("This code is wrong");
@@ -256,18 +180,18 @@ public class Client {
             case 3:
                 System.out.println("Enter code");
                 int code1 = scanner.nextInt();
-                if( moneyManager.getOutcomeManager().checkCode(code1))
-                    moneyManager.remove(moneyManager.getOutcomeManager(),code1);
+                if( outcomeManager.checkCode(code1))
+                    moneyManager.remove(outcomeManager,code1);
                 else
                     System.out.println("This code is wrong");
                 outcomeMenuRun();
                 break;
             case 4:
-                moneyManager.getOutcomeManager().display();
+                outcomeManager.display();
                 outcomeMenuRun();
                 break;
             case 5:
-                moneyManager.getOutcomeManager().getTotal();
+                moneyManager.getTotal(outcomeManager);
                 outcomeMenuRun();
                 break;
             case 0:
@@ -280,7 +204,7 @@ public class Client {
         }
     }
     public void editOutcomeMenuRun(int code){
-        editOutcomeMenu();
+        secretaryMenuDesigner.editOutcomeMenu();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your choose");
         int choose = scanner.nextInt();
@@ -289,20 +213,20 @@ public class Client {
             case 1:
                 System.out.println("Enter new date");
                 String date = scanner.nextLine();
-                moneyManager.getOutcomeManager().editDate(code,date);
+                moneyManager.editDate(outcomeManager,code,date);
                 editOutcomeMenuRun(code);
                 break;
             case 2:
                 System.out.println("Enter new money");
                 double money = scanner.nextDouble();
                 scanner.nextLine();
-                moneyManager.getOutcomeManager().editMoney(code,money);
+                moneyManager.editMoney(outcomeManager,code,money);
                 editOutcomeMenuRun(code);
                 break;
             case 3:
                 System.out.println("Enter new note");
                 String note = scanner.nextLine();
-                moneyManager.getOutcomeManager().editNote(code,note);
+                moneyManager.editNote(outcomeManager,code,note);
                 editOutcomeMenuRun(code);
                 break;
             case 4:
@@ -313,9 +237,9 @@ public class Client {
                 scanner.nextLine();
                 System.out.println("Enter new note");
                 String note1 = scanner.nextLine();
-                moneyManager.getOutcomeManager().editDate(code,date1);
-                moneyManager.getOutcomeManager().editMoney(code,money1);
-                moneyManager.getOutcomeManager().editNote(code,note1);
+                moneyManager.editDate(outcomeManager,code,date1);
+                moneyManager.editMoney(outcomeManager,code,money1);
+                moneyManager.editNote(outcomeManager,code,note1);
                 editOutcomeMenuRun(code);
                 break;
             case 0:
@@ -327,11 +251,11 @@ public class Client {
         }
     }
     private void debtMenuRun(){
-        debtMenu();
+        secretaryMenuDesigner.debtMenu();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your choose: ");
         int choose = scanner.nextInt();
-        scanner.next();
+        scanner.nextLine();
         switch (choose){
             case 1:
                 System.out.println("Enter new date :");
@@ -343,14 +267,14 @@ public class Client {
                 scanner.nextLine();
                 System.out.println("Enter new note :");
                 String note = scanner.nextLine();
-                moneyManager.getDebtManager().newDebt(date,name,money,note);
+                debtManager.newDebt(date,name,money,note);
                 debtMenuRun();
                 break;
             case 2:
                 System.out.println("Enter code ");
                 int code = scanner.nextInt();
                 scanner.nextLine();
-                if (moneyManager.getDebtManager().checkCode(code))
+                if (debtManager.checkCode(code))
                     editDebtMenuRun(code);
                 else
                     System.out.println("This code is wrong");
@@ -360,8 +284,8 @@ public class Client {
                 System.out.println("Enter code ");
                 int code1 = scanner.nextInt();
                 scanner.nextLine();
-                if (moneyManager.getDebtManager().checkCode(code1))
-                    moneyManager.remove(moneyManager.getDebtManager(),code1);
+                if (debtManager.checkCode(code1))
+                    moneyManager.remove(debtManager,code1);
                 else
                     System.out.println("This code is wrong");
                 debtMenuRun();
@@ -378,11 +302,11 @@ public class Client {
                 debtMenuRun();
                 break;
             case 5:
-                moneyManager.getDebtManager().display();
+                debtManager.display();
                 debtMenuRun();
                 break;
             case 6:
-                moneyManager.getDebtManager().getTotal();
+                moneyManager.getTotal(debtManager);
                 debtMenuRun();
                 break;
             case 0:
@@ -394,7 +318,7 @@ public class Client {
         }
     }
     private void editDebtMenuRun(int code){
-        editDebtMenu();
+        secretaryMenuDesigner.editDebtMenu();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your choose :");
         int choose = scanner.nextInt();
@@ -403,26 +327,26 @@ public class Client {
             case 1:
                 System.out.println("Enter new date ");
                 String date = scanner.nextLine();
-                moneyManager.getDebtManager().editDate(code,date);
+                moneyManager.editDate(debtManager,code,date);
                 editDebtMenuRun(code);
                 break;
             case 2:
                 System.out.println("Enter new name");
                 String name = scanner.nextLine();
-                moneyManager.getDebtManager().editName(code,name);
+                moneyManager.editName(debtManager,code,name);
                 editDebtMenuRun(code);
                 break;
             case 3:
                 System.out.println("Enter new money");
                 double money = scanner.nextDouble();
                 scanner.nextLine();
-                moneyManager.getDebtManager().editMoney(code,money);
+                moneyManager.editMoney(debtManager,code,money);
                 editDebtMenuRun(code);
                 break;
             case 4:
                 System.out.println("Enter new note");
                 String note = scanner.nextLine();
-                moneyManager.getDebtManager().editNote(code,note);
+                moneyManager.editNote(debtManager,code,note);
                 editDebtMenuRun(code);
                 break;
             case 5:
@@ -435,10 +359,10 @@ public class Client {
                 scanner.nextLine();
                 System.out.println("Enter new note");
                 String note1 = scanner.nextLine();
-                moneyManager.getDebtManager().editDate(code,date1);
-                moneyManager.getDebtManager().editName(code,name1);
-                moneyManager.getDebtManager().editMoney(code,money1);
-                moneyManager.getDebtManager().editNote(code,note1);
+                moneyManager.editDate(debtManager,code,date1);
+                moneyManager.editName(debtManager,code,name1);
+                moneyManager.editMoney(debtManager,code,money1);
+                moneyManager.editNote(debtManager,code,note1);
                 editDebtMenuRun(code);
                 break;
             case 0:
@@ -451,11 +375,11 @@ public class Client {
     }
 
     private void loanMenuRun(){
-        loanMenu();
+        secretaryMenuDesigner.loanMenu();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your choose: ");
         int choose = scanner.nextInt();
-        scanner.next();
+        scanner.nextLine();
         switch (choose){
             case 1:
                 System.out.println("Enter new date :");
@@ -467,14 +391,14 @@ public class Client {
                 scanner.nextLine();
                 System.out.println("Enter note :");
                 String note = scanner.nextLine();
-                moneyManager.getLoanManager().newLoan(date,name,money,note);
+                loanManager.newLoan(date,name,money,note);
                 loanMenuRun();
                 break;
             case 2:
                 System.out.println("Enter code ");
                 int code = scanner.nextInt();
                 scanner.nextLine();
-                if (moneyManager.getLoanManager().checkCode(code))
+                if (loanManager.checkCode(code))
                     editLoanMenuRun(code);
                 else
                     System.out.println("This code is wrong");
@@ -484,8 +408,8 @@ public class Client {
                 System.out.println("Enter code ");
                 int code1 = scanner.nextInt();
                 scanner.nextLine();
-                if (moneyManager.getLoanManager().checkCode(code1))
-                    moneyManager.remove(moneyManager.getLoanManager(),code1);
+                if (loanManager.checkCode(code1))
+                    moneyManager.remove(loanManager,code1);
                 else
                     System.out.println("This code is wrong");
                 loanMenuRun();
@@ -502,11 +426,11 @@ public class Client {
                 loanMenuRun();
                 break;
             case 5:
-                moneyManager.getLoanManager().display();
+                loanManager.display();
                 loanMenuRun();
                 break;
             case 6:
-                moneyManager.getLoanManager().getTotal();
+                moneyManager.getTotal(loanManager);
                 loanMenuRun();
                 break;
             case 0:
@@ -518,7 +442,7 @@ public class Client {
         }
     }
     private void editLoanMenuRun(int code){
-        editLoanMenu();
+        secretaryMenuDesigner.editLoanMenu();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your choose :");
         int choose = scanner.nextInt();
@@ -527,26 +451,26 @@ public class Client {
             case 1:
                 System.out.println("Enter new date ");
                 String date = scanner.nextLine();
-                moneyManager.getLoanManager().editDate(code,date);
+                moneyManager.editDate(loanManager,code,date);
                 editLoanMenuRun(code);
                 break;
             case 2:
                 System.out.println("Enter new name");
                 String name = scanner.nextLine();
-                moneyManager.getLoanManager().editName(code,name);
+                moneyManager.editName(loanManager,code,name);
                 editLoanMenuRun(code);
                 break;
             case 3:
                 System.out.println("Enter new money");
                 double money = scanner.nextDouble();
                 scanner.nextLine();
-                moneyManager.getLoanManager().editMoney(code,money);
+                moneyManager.editMoney(loanManager,code,money);
                 editLoanMenuRun(code);
                 break;
             case 4:
                 System.out.println("Enter new note");
                 String note = scanner.nextLine();
-                moneyManager.getLoanManager().editNote(code,note);
+                moneyManager.editNote(loanManager,code,note);
                 editLoanMenuRun(code);
                 break;
             case 5:
@@ -559,10 +483,10 @@ public class Client {
                 scanner.nextLine();
                 System.out.println("Enter new note");
                 String note1 = scanner.nextLine();
-                moneyManager.getLoanManager().editDate(code,date1);
-                moneyManager.getLoanManager().editName(code,name1);
-                moneyManager.getLoanManager().editMoney(code,money1);
-                moneyManager.getLoanManager().editNote(code,note1);
+                moneyManager.editDate(loanManager,code,date1);
+                moneyManager.editName(loanManager,code,name1);
+                moneyManager.editMoney(loanManager,code,money1);
+                moneyManager.editNote(loanManager,code,note1);
                 editLoanMenuRun(code);
                 break;
             case 0:
@@ -574,7 +498,7 @@ public class Client {
         }
     }
     public void mainMenuRun(){
-        mainMenu();
+        secretaryMenuDesigner.mainMenu();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your choose ");
         int choose = scanner.nextInt();
