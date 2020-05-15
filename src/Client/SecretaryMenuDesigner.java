@@ -12,7 +12,14 @@ public class SecretaryMenuDesigner {
     public void mainMenu(){
         System.out.println("<===== Main menu =====>");
         System.out.println("1. Money Manager");
+        System.out.println("2. Lotto");
         System.out.println("0. Exit");
+    }
+    public void lottoMenu(){
+        System.out.println("<+++ Lotto menu +++>");
+        System.out.println("1. Premium reward in 7 days");
+        System.out.println("2. Get a number for a day");
+        System.out.println("0 . Return main menu");
     }
     public void moneyManagerMenu(){
         System.out.println("<+++ Money Manager Menu +++>");

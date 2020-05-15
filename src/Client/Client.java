@@ -3,7 +3,12 @@ package Client;
 import Manager.*;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Client {
     private final MoneyManager moneyManager;
@@ -502,6 +507,39 @@ public class Client {
                 editLoanMenuRun(code);
         }
     }
+    public void lottoMenuRun() throws IOException {
+        secretaryMenuDesigner.lottoMenu();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter your choose ");
+        int choose = scanner.nextInt();
+        scanner.nextLine();
+        switch (choose){
+            case 1:
+                String link = "https://xoso.com.vn/xo-so-mien-bac/xsmb-p1.html";
+                URL url = new URL(link);
+                Scanner scanner1 = new Scanner(new InputStreamReader(url.openStream()));
+                scanner1.useDelimiter("\\Z");
+                String content = scanner1.next();
+                Pattern pattern = Pattern.compile("<span class=\"item col1 colorred xshover\">(.*?)</span>");
+                Matcher matcher = pattern.matcher(content);
+                System.out.println("Result of premium in 7 days ");
+                while (matcher.find()){
+                    System.out.println(matcher.group(1));
+                }
+                lottoMenuRun();
+                break;
+            case 2:
+                int num1 = (int) (Math.random()*100);
+                int num2 = (int) (Math.random()*10);
+                System.out.println("The lucky number of today is : "+(num1+num2));
+            case 0:
+                mainMenuRun();
+                break;
+            default:
+                System.out.println("Please choose from 0 to 2");
+                lottoMenuRun();
+        }
+    }
     public void mainMenuRun() throws IOException {
         secretaryMenuDesigner.mainMenu();
         Scanner scanner = new Scanner(System.in);
@@ -512,8 +550,14 @@ public class Client {
             case 1:
                 moneyManagerMenuRun();
                 break;
+            case 2:
+                lottoMenuRun();
+                break;
             case 0:
                 System.out.println("Goodbye ^_^");
+            default:
+                System.out.println("Please choose from 0 to 2");
+                mainMenuRun();
         }
     }
     public void start() throws IOException {
